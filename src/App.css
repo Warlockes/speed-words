@@ -1,0 +1,14 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+	list-style: none;
+}
+
+html {
+	font-family: 'Inter', sans-serif;
+}
+
+body {
+	background-color: #F6F7FF;
+}
