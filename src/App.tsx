@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Welcome } from "./components/Welcome";
-import { Wrapper } from "./components/Wrapper";
+import { Wrapper, Welcome, Game, Result } from "./components";
 
 import "./App.css";
 
@@ -12,7 +11,19 @@ function App() {
     setIsStart(true);
   };
 
-  return <Wrapper>{!isStart && <Welcome startGame={startGame} />}</Wrapper>;
+  const tryAgain = () => {
+    setIsStart(false);
+  };
+
+  return (
+    <Wrapper>
+      {!isStart ? (
+        <Welcome startGame={startGame} />
+      ) : (
+        <Result onTryAgain={tryAgain} result="good" />
+      )}
+    </Wrapper>
+  );
 }
 
 export default App;

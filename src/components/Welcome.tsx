@@ -1,16 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const StartButton = styled.button`
-  width: 210px;
-  height: 70px;
-  border-radius: 60px;
-  background-color: #0060ff;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 600;
-  cursor: pointer;
-`;
+import { Button } from "./";
 
 const Header = styled.div`
   font-size: 40px;
@@ -32,12 +23,12 @@ const Label = styled.div`
 `;
 
 interface WelcomeProps {
-  startGame(): any;
+  startGame(): void;
 }
 
 export const Welcome: React.FC<WelcomeProps> = ({
   startGame,
-}: WelcomeProps) => {
+}: WelcomeProps): React.ReactElement => {
   return (
     <>
       <Header>
@@ -45,7 +36,7 @@ export const Welcome: React.FC<WelcomeProps> = ({
         SPEED WORDS
       </Header>
       <Label>Игра на скорость ввода слов</Label>
-      <StartButton onClick={startGame}>🔥 Начать</StartButton>
+      <Button onClick={startGame}>🔥 Начать</Button>
     </>
   );
 };
