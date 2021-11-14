@@ -47,31 +47,95 @@ const StatisticLabel = styled.div`
 `;
 
 interface StatisticCounterProps {
-  wordCount?: boolean;
+  secondary?: boolean;
 }
 
 const StatisticCounter = styled.div<StatisticCounterProps>`
   font-family: "Roboto", sans-serif;
   font-size: 28px;
   font-weight: 900;
-  color: ${(props) => (props.wordCount ? "#55bd55" : "#44a0ff")};
+  color: ${(props) => (props.secondary ? "#55bd55" : "#44a0ff")};
   text-align: center;
 `;
 
-export const Game = () => {
+interface GameProps {
+  wordCounter: number;
+  initialTimer: number;
+  currentWord: string;
+  setWordCounter(state: number): void;
+  setNewWord(): void;
+  setIsOver(state: boolean): void;
+}
+
+export const Game: React.FC<GameProps> = ({
+  wordCounter,
+  initialTimer,
+  currentWord,
+  setWordCounter,
+  setNewWord,
+  setIsOver,
+}: GameProps): React.ReactElement => {
+  const [timer, setTimer] = React.useState(initialTimer);
+  const [inputValue, setInputValue] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    inputRef?.current?.focus();
+  }, []);
+
+  React.useEffect(() => {
+    if (timer === 0) {
+      setIsOver(true);
+    }
+  }, [timer]);
+
+  React.useEffect(() => {
+    const timerId = setInterval(() => {
+      if (timer > 0) {
+        setTimer(timer - 1);
+      }
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [timer]);
+
+  const onChangeInput = (event: React.FormEvent<HTMLInputElement>): void => {
+    setInputValue(event.currentTarget.value);
+    if (event.currentTarget.value === currentWord) {
+      setTimeout(() => onCorrectInput(), 200);
+    }
+  };
+
+  const checkWord = (): boolean => {
+    if (inputValue.length === currentWord.length) {
+      return inputValue !== currentWord;
+    }
+    return false;
+  };
+
+  const onCorrectInput = (): void => {
+    setWordCounter(wordCounter + 1);
+    setInputValue("");
+    setNewWord();
+  };
+
   return (
     <>
       <Label>Введите слово:</Label>
-      <Word>Slaves</Word>
-      <Input />
+      <Word>{currentWord}</Word>
+      <Input
+        ref={inputRef}
+        value={inputValue}
+        onChange={onChangeInput}
+        error={checkWord()}
+      />
       <StatisticRow>
         <div>
           <StatisticLabel>Осталось времени:</StatisticLabel>
-          <StatisticCounter>12 сек.</StatisticCounter>
+          <StatisticCounter>{timer} сек.</StatisticCounter>
         </div>
         <div>
           <StatisticLabel>Введено слов:</StatisticLabel>
-          <StatisticCounter wordCount>6</StatisticCounter>
+          <StatisticCounter secondary>{wordCounter}</StatisticCounter>
         </div>
       </StatisticRow>
     </>
