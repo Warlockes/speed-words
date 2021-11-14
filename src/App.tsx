@@ -2,9 +2,9 @@ import React from "react";
 
 import { Wrapper, Welcome, Game, Result } from "./components";
 
-import "./App.css";
+import { words } from "./words";
 
-const words = ["Biba", "Slaves", "Key", "Value", "Boba"];
+import "./App.css";
 
 function App() {
   const [isStart, setIsStart] = React.useState(false);
@@ -12,24 +12,24 @@ function App() {
   const [wordCounter, setWordCounter] = React.useState(0);
   const [currentWord, setCurrentWord] = React.useState("");
 
-  React.useEffect(() => {
-    setNewWord();
-  }, []);
+  const getRandomWord = React.useCallback((): string => {
+    const getRandomNumber = (min: number, max: number): number => {
+      return Math.floor(min + Math.random() * (max - min + 1));
+    };
 
-  const setNewWord = (): void => {
-    let word = getRandomWord();
-    setCurrentWord(word);
-  };
-
-  const getRandomNumber = (min: number, max: number): number => {
-    return Math.floor(min + Math.random() * (max - min + 1));
-  };
-
-  const getRandomWord = (): string => {
     let index = getRandomNumber(0, words.length - 1);
 
     return words[index];
-  };
+  }, []);
+
+  const setNewWord = React.useCallback((): void => {
+    let word = getRandomWord();
+    setCurrentWord(word);
+  }, [getRandomWord]);
+
+  React.useEffect(() => {
+    setNewWord();
+  }, [setNewWord]);
 
   const startGame = (): void => {
     setIsStart(true);
@@ -49,7 +49,7 @@ function App() {
         <Game
           wordCounter={wordCounter}
           setWordCounter={setWordCounter}
-          initialTimer={30}
+          initialTimer={60}
           currentWord={currentWord}
           setNewWord={setNewWord}
           setIsOver={setIsOver}

@@ -87,7 +87,7 @@ export const Game: React.FC<GameProps> = ({
     if (timer === 0) {
       setIsOver(true);
     }
-  }, [timer]);
+  }, [timer, setIsOver]);
 
   React.useEffect(() => {
     const timerId = setInterval(() => {
@@ -106,7 +106,7 @@ export const Game: React.FC<GameProps> = ({
   };
 
   const checkWord = (): boolean => {
-    if (inputValue.length === currentWord.length) {
+    if (inputValue.length >= currentWord.length) {
       return inputValue !== currentWord;
     }
     return false;

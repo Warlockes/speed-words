@@ -81,7 +81,7 @@ export const Result: React.FC<ResultProps> = ({
     <>
       <HeaderEmoji>{selectedResult?.emoji}</HeaderEmoji>
       <Label>
-        {selectedResult?.label} За <strong>30 секунд</strong>, ты ввел:
+        {selectedResult?.label} За <strong>60 секунд</strong>, ты ввел:
       </Label>
       <ResultCount color={selectedResult?.color}>
         {getCorrectCase()}
