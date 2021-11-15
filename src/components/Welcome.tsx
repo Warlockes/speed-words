@@ -22,13 +22,13 @@ const Label = styled.div`
   margin-bottom: 30px;
 `;
 
-interface WelcomeProps {
+interface IWelcomeProps {
   startGame(): void;
 }
 
-export const Welcome: React.FC<WelcomeProps> = ({
+export const Welcome: React.FC<IWelcomeProps> = ({
   startGame,
-}: WelcomeProps): React.ReactElement => {
+}: IWelcomeProps): React.ReactElement => {
   return (
     <>
       <Header>

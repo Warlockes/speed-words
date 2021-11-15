@@ -16,11 +16,7 @@ const Label = styled.div`
   margin-bottom: 10px;
 `;
 
-interface ResultCountProps {
-  color: string;
-}
-
-const ResultCount = styled.div<ResultCountProps>`
+const ResultCount = styled.div<{ color: string }>`
   font-family: "Roboto", sans-serif;
   font-weight: 900;
   font-size: 48px;
@@ -28,11 +24,7 @@ const ResultCount = styled.div<ResultCountProps>`
   color: ${(props) => props.color};
 `;
 
-interface ResultsObj {
-  [key: string]: any;
-}
-
-const results: ResultsObj = {
+const results: { [key: string]: any } = {
   excellent: {
     emoji: "🔥",
     label: "Воу!",
@@ -50,22 +42,22 @@ const results: ResultsObj = {
   },
 };
 
-const textForms = ["слово", "слова", "слов"];
+const textForms: Array<string> = ["слово", "слова", "слов"];
 
-interface ResultProps {
+interface IResultProps {
   result: string;
   wordCounter: number;
   onTryAgain(): void;
 }
 
-export const Result: React.FC<ResultProps> = ({
+export const Result: React.FC<IResultProps> = ({
   result,
   wordCounter,
   onTryAgain,
-}: ResultProps): React.ReactElement => {
+}: IResultProps): React.ReactElement => {
   const selectedResult = results[result];
 
-  const getCorrectCase = (): string => {
+  const getCorrectCaseCounter = (): string => {
     return `${wordCounter} ${
       textForms[
         wordCounter % 100 > 4 && wordCounter % 100 < 20
@@ -77,15 +69,15 @@ export const Result: React.FC<ResultProps> = ({
     }`;
   };
 
+  const resultCounter: string = getCorrectCaseCounter();
+
   return (
     <>
       <HeaderEmoji>{selectedResult?.emoji}</HeaderEmoji>
       <Label>
         {selectedResult?.label} За <strong>60 секунд</strong>, ты ввел:
       </Label>
-      <ResultCount color={selectedResult?.color}>
-        {getCorrectCase()}
-      </ResultCount>
+      <ResultCount color={selectedResult?.color}>{resultCounter}</ResultCount>
       <Button onClick={onTryAgain}>🤔 Попробовать снова?</Button>
     </>
   );

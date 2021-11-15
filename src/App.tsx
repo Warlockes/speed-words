@@ -12,15 +12,17 @@ function App() {
   const [wordCounter, setWordCounter] = React.useState(0);
   const [currentWord, setCurrentWord] = React.useState("");
 
-  const getRandomWord = React.useCallback((): string => {
-    const getRandomNumber = (min: number, max: number): number => {
+  const getRandomNumber = React.useCallback(
+    (min: number, max: number): number => {
       return Math.floor(min + Math.random() * (max - min + 1));
-    };
+    },
+    []
+  );
 
+  const getRandomWord = React.useCallback((): string => {
     let index = getRandomNumber(0, words.length - 1);
-
     return words[index];
-  }, []);
+  }, [getRandomNumber]);
 
   const setNewWord = React.useCallback((): void => {
     let word = getRandomWord();
@@ -36,7 +38,6 @@ function App() {
   };
 
   const tryAgain = (): void => {
-    setIsStart(false);
     setIsOver(false);
     setWordCounter(0);
   };

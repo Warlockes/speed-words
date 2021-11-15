@@ -15,11 +15,11 @@ const Word = styled.div`
   margin-bottom: 26px;
 `;
 
-interface InputProps {
+interface IInputProps {
   error?: boolean;
 }
 
-const Input = styled.input<InputProps>`
+const Input = styled.input<IInputProps>`
   min-width: 300px;
   height: 65px;
   border-radius: 20px;
@@ -46,11 +46,11 @@ const StatisticLabel = styled.div`
   margin-bottom: 10px;
 `;
 
-interface StatisticCounterProps {
+interface IStatisticCounterProps {
   secondary?: boolean;
 }
 
-const StatisticCounter = styled.div<StatisticCounterProps>`
+const StatisticCounter = styled.div<IStatisticCounterProps>`
   font-family: "Roboto", sans-serif;
   font-size: 28px;
   font-weight: 900;
@@ -58,7 +58,7 @@ const StatisticCounter = styled.div<StatisticCounterProps>`
   text-align: center;
 `;
 
-interface GameProps {
+interface IGameProps {
   wordCounter: number;
   initialTimer: number;
   currentWord: string;
@@ -67,20 +67,20 @@ interface GameProps {
   setIsOver(state: boolean): void;
 }
 
-export const Game: React.FC<GameProps> = ({
+export const Game: React.FC<IGameProps> = ({
   wordCounter,
   initialTimer,
   currentWord,
   setWordCounter,
   setNewWord,
   setIsOver,
-}: GameProps): React.ReactElement => {
+}: IGameProps): React.ReactElement => {
   const [timer, setTimer] = React.useState(initialTimer);
   const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
-    inputRef?.current?.focus();
+    inputRef.current?.focus();
   }, []);
 
   React.useEffect(() => {
@@ -100,14 +100,14 @@ export const Game: React.FC<GameProps> = ({
 
   const onChangeInput = (event: React.FormEvent<HTMLInputElement>): void => {
     setInputValue(event.currentTarget.value);
-    if (event.currentTarget.value === currentWord) {
+    if (event.currentTarget.value.toLowerCase() === currentWord) {
       setTimeout(() => onCorrectInput(), 200);
     }
   };
 
   const checkWord = (): boolean => {
     if (inputValue.length >= currentWord.length) {
-      return inputValue !== currentWord;
+      return inputValue.toLowerCase() !== currentWord;
     }
     return false;
   };

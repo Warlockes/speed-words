@@ -14,12 +14,12 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-interface WrapperProps {
+interface IWrapperProps {
   children: React.ReactNode;
 }
 
-export const Wrapper: React.FC<WrapperProps> = ({
+export const Wrapper: React.FC<IWrapperProps> = ({
   children,
-}: WrapperProps): React.ReactElement => {
+}: IWrapperProps): React.ReactElement => {
   return <AppWrapper>{children}</AppWrapper>;
 };

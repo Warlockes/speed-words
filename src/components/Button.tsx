@@ -12,14 +12,14 @@ const Btn = styled.button`
   cursor: pointer;
 `;
 
-interface ButtonProps {
+interface IButtonProps {
   onClick(): void;
   children: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<IButtonProps> = ({
   onClick,
   children,
-}: ButtonProps): React.ReactElement => {
+}: IButtonProps): React.ReactElement => {
   return <Btn onClick={onClick}>{children}</Btn>;
 };
