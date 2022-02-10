@@ -9,6 +9,7 @@ import "./App.css";
 function App() {
   const [isStart, setIsStart] = React.useState(false);
   const [isOver, setIsOver] = React.useState(false);
+  const [gameTimer, setGameTimer] = React.useState(60);
   const [wordCounter, setWordCounter] = React.useState(0);
   const [currentWord, setCurrentWord] = React.useState("");
 
@@ -46,11 +47,13 @@ function App() {
     <Wrapper>
       {!isStart ? (
         <Welcome startGame={startGame} />
-      ) : !isOver ? (
+      ) : // ) : true ? (
+      //   <Welcome startGame={startGame} /> Написать логику выбора времени игры
+      !isOver ? (
         <Game
           wordCounter={wordCounter}
           setWordCounter={setWordCounter}
-          initialTimer={60}
+          initialTimer={gameTimer}
           currentWord={currentWord}
           setNewWord={setNewWord}
           setIsOver={setIsOver}
@@ -62,6 +65,7 @@ function App() {
             wordCounter > 20 ? "excellent" : wordCounter > 15 ? "fine" : "good"
           }
           wordCounter={wordCounter}
+          gameTimer={gameTimer}
         />
       )}
     </Wrapper>

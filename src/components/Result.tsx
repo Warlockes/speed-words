@@ -47,12 +47,14 @@ const textForms: Array<string> = ["слово", "слова", "слов"];
 interface IResultProps {
   result: string;
   wordCounter: number;
+  gameTimer: number;
   onTryAgain(): void;
 }
 
 export const Result: React.FC<IResultProps> = ({
   result,
   wordCounter,
+  gameTimer,
   onTryAgain,
 }: IResultProps): React.ReactElement => {
   const selectedResult = results[result];
@@ -75,7 +77,7 @@ export const Result: React.FC<IResultProps> = ({
     <>
       <HeaderEmoji>{selectedResult?.emoji}</HeaderEmoji>
       <Label>
-        {selectedResult?.label} За <strong>60 секунд</strong>, ты ввел:
+        {selectedResult?.label} За <strong>{gameTimer} секунд</strong>, ты ввел:
       </Label>
       <ResultCount color={selectedResult?.color}>{resultCounter}</ResultCount>
       <Button onClick={onTryAgain}>🤔 Попробовать снова?</Button>
