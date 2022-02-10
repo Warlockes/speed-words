@@ -106,10 +106,8 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   const checkWord = (): boolean => {
-    if (inputValue.length >= currentWord.length) {
-      return inputValue.toLowerCase() !== currentWord;
-    }
-    return false;
+    const regexp = new RegExp(`^${inputValue.toLowerCase()}`);
+    return !regexp.test(currentWord);
   };
 
   const onCorrectInput = (): void => {
